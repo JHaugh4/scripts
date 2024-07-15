@@ -44,7 +44,6 @@ cat > "flake.nix" <<- EOM
     devShells.default = import ./shell.nix { inherit pkgs; };
   }
 }
-}
 EOM
 # Now set up the .envrc direnv file
 cat > ".envrc" <<- EOM
