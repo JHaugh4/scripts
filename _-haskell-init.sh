@@ -43,7 +43,7 @@ cat > "flake.nix" <<- 'EOM'
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
-    devShells.default = import ./shell.nix { inherit pkgs; };
+    devShells.${system}.default = import ./shell.nix { inherit pkgs; };
   };
 }
 EOM
