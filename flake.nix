@@ -28,12 +28,18 @@
         runtimeInputs = [];
         text = builtins.readFile ./_-full-rebuild.sh;
       };
+      haskell-init = pkgs.writeShellApplication {
+        name = "_-haskell-init";
+        runtimeInputs = [];
+        text = builtins.readFile ./_-haskell-init.sh;
+      };
       all = pkgs.symlinkJoin {
         name = "all";
         paths = [
           backup
           home-rebuild
           full-rebuild
+          haskell-init
         ];
       };
       default = all;
