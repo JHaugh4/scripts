@@ -18,7 +18,7 @@ if [[ ${CONFIRM^^} == 'N' ]]; then
 fi
 # Now we can setup the shell.nix file
 cat > "shell.nix" <<- EOM
-{ pkgs ? import <nixpkgs> { }, ... }:
+{ pkgs , ... }:
 
 pkgs.mkShell {
   packages = with pkgs; [
@@ -29,10 +29,27 @@ pkgs.mkShell {
   inputsFrom = [ (pkgs.haskellPackages.callCabal2nix "$CABALNAME" ./. { }).env ];
 }
 EOM
+# Then setup the flake to call the shell
+cat > "flake.nix" <<- EOM
+{
+  description = "Default Haskell Flake";
+
+  outputs = {
+    self,
+    nixpkgs
+  }: let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+  in {
+    devShells.default = import ./shell.nix { inherit pkgs; };
+  }
+}
+}
+EOM
 # Now set up the .envrc direnv file
 cat > ".envrc" <<- EOM
 watch_file $CABALNAME.cabal
-use nix
+use flake
 EOM
 # Finally allow direnv
 direnv allow
