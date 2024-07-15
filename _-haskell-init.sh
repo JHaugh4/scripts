@@ -10,11 +10,11 @@ fi
 # Try to guess the cabal project name
 CABALNAME=$(basename "$PWD")
 # Ask the user if this is correct
-read -p "Cabal project name: $CABALNAME, is this correct? (y/n)" CONFIRM
+read -r -p "Cabal project name: $CABALNAME, is this correct? (y/n)" CONFIRM
 # If they named it something else
 if [[ ${CONFIRM^^} == 'N' ]]; then
     # Then ask them for the name
-    read -p "Enter cabal project name: " CABALNAME
+    read -r -p "Enter cabal project name: " CABALNAME
 fi
 # Now we can setup the shell.nix file
 cat > "shell.nix" <<- EOM
@@ -30,7 +30,9 @@ pkgs.mkShell {
 }
 EOM
 # Then setup the flake to call the shell
-cat > "flake.nix" <<- EOM
+# '' around EOM prevent variable expansion
+# in here doc
+cat > "flake.nix" <<- 'EOM'
 {
   description = "Default Haskell Flake";
 
