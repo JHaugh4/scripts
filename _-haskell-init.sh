@@ -8,7 +8,8 @@ then
     cabal init
 fi
 # Try to guess the cabal project name
-CABALNAME=$(basename "$PWD")
+CABALNAME=$(find . -type f -name "*.cabal" | head -n 1)
+CABALNAME=$(basename "CABALNAME" .cabal)
 # Ask the user if this is correct
 read -r -p "Cabal project name: $CABALNAME, is this correct? (y/n)" CONFIRM
 # If they named it something else
@@ -32,25 +33,26 @@ EOM
 # Then setup the flake to call the shell
 # '' around EOM prevent variable expansion
 # in here doc
-cat > "flake.nix" <<- 'EOM'
-{
-  description = "Default Haskell Flake";
-
-  outputs = {
-    self,
-    nixpkgs
-  }: let
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    devShells.${system}.default = import ./shell.nix { inherit pkgs; };
-  };
-}
-EOM
+# Doesn't work properly
+# cat > "flake.nix" <<- 'EOM'
+# {
+#   description = "Default Haskell Flake";
+#
+#   outputs = {
+#     self,
+#     nixpkgs
+#   }: let
+#     system = "x86_64-linux";
+#     pkgs = nixpkgs.legacyPackages.${system};
+#   in {
+#     devShells.${system}.default = import ./shell.nix { inherit pkgs; };
+#   };
+# }
+# EOM
 # Now set up the .envrc direnv file
 cat > ".envrc" <<- EOM
 watch_file $CABALNAME.cabal
-use flake
+use nix
 EOM
 # Finally allow direnv
 direnv allow
