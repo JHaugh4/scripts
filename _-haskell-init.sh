@@ -9,7 +9,7 @@ then
 fi
 # Try to guess the cabal project name
 CABALNAME=$(find . -type f -name "*.cabal" | head -n 1)
-CABALNAME=$(basename "CABALNAME" .cabal)
+CABALNAME=$(basename "$CABALNAME" .cabal)
 # Ask the user if this is correct
 read -r -p "Cabal project name: $CABALNAME, is this correct? (y/n)" CONFIRM
 # If they named it something else
