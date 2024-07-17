@@ -17,42 +17,39 @@ if [[ ${CONFIRM^^} == 'N' ]]; then
     # Then ask them for the name
     read -r -p "Enter cabal project name: " CABALNAME
 fi
-# Now we can setup the shell.nix file
-cat > "shell.nix" <<- EOM
-{ pkgs , ... }:
+# Now we can setup the flake.nix file
+# '' around EOM prevent variable expansion
+# in here doc
+cat > "flake.nix" <<- 'EOM'
+{
+  description = "Default Haskell Flake";
+
+  outputs = {
+    self,
+    nixpkgs
+  }: let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+  in {
+    devShells.${system}.default = import ./shell.nix { inherit pkgs; };
+  };
+}
+EOM
+# Then setup the shell.nix
+cat > "shell.nix" <<- 'EOM'
+{ pkgs ? import <nixpkgs> {}, ... }:
 
 pkgs.mkShell {
   packages = with pkgs; [
-    cabal-install
-    ghc
     haskell-language-server
   ];
-  inputsFrom = [ (pkgs.haskellPackages.callCabal2nix "$CABALNAME" ./. { }).env ];
+  inputsFrom = [ (pkgs.haskellPackages.callCabal2nix "playground" ./. { }).env ];
 }
-EOM
-# Then setup the flake to call the shell
-# '' around EOM prevent variable expansion
-# in here doc
-# Doesn't work properly
-# cat > "flake.nix" <<- 'EOM'
-# {
-#   description = "Default Haskell Flake";
-#
-#   outputs = {
-#     self,
-#     nixpkgs
-#   }: let
-#     system = "x86_64-linux";
-#     pkgs = nixpkgs.legacyPackages.${system};
-#   in {
-#     devShells.${system}.default = import ./shell.nix { inherit pkgs; };
-#   };
-# }
 # EOM
 # Now set up the .envrc direnv file
 cat > ".envrc" <<- EOM
-watch_file $CABALNAME.cabal
-use nix
+watch_file *.cabal
+use flake
 EOM
 # Finally allow direnv
 direnv allow
