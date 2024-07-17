@@ -43,7 +43,7 @@ pkgs.mkShell {
   packages = with pkgs; [
     haskell-language-server
   ];
-  inputsFrom = [ (pkgs.haskellPackages.callCabal2nix "playground" ./. { }).env ];
+  inputsFrom = [ (pkgs.haskellPackages.callCabal2nix "${CABALNAME}" ./. { }).env ];
 }
 EOM
 # Now set up the .envrc direnv file
