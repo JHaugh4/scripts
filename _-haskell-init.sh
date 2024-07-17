@@ -36,7 +36,7 @@ cat > "flake.nix" <<- 'EOM'
 }
 EOM
 # Then setup the shell.nix
-cat > "shell.nix" <<- 'EOM'
+cat > "shell.nix" <<- EOM
 { pkgs ? import <nixpkgs> {}, ... }:
 
 pkgs.mkShell {
@@ -45,7 +45,7 @@ pkgs.mkShell {
   ];
   inputsFrom = [ (pkgs.haskellPackages.callCabal2nix "playground" ./. { }).env ];
 }
-# EOM
+EOM
 # Now set up the .envrc direnv file
 cat > ".envrc" <<- EOM
 watch_file *.cabal
