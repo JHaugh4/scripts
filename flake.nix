@@ -33,6 +33,11 @@
         runtimeInputs = [];
         text = builtins.readFile ./_-haskell-init.sh;
       };
+      simple-init = pkgs.writeShellApplication {
+        name = "_-simple-init";
+        runtimeInputs = [];
+        text = builtins.readFile ./_-simple-init.sh;
+      };
       all = pkgs.symlinkJoin {
         name = "all";
         paths = [
@@ -40,6 +45,7 @@
           home-rebuild
           full-rebuild
           haskell-init
+          simple-init
         ];
       };
       default = all;
