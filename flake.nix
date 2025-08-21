@@ -38,6 +38,11 @@
         runtimeInputs = [];
         text = builtins.readFile ./_-simple-init.sh;
       };
+      regexify = pkgs.writeShellApplication {
+        name = "_-regexify";
+        runtimeInputs = []
+        text = builtins.readFile ./_-regexify.sh;
+      };
       all = pkgs.symlinkJoin {
         name = "all";
         paths = [

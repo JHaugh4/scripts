@@ -49,6 +49,7 @@ EOM
 # Now set up the .envrc direnv file
 cat > ".envrc" <<- EOM
 watch_file *.cabal
+watch_file shell.nix
 use flake
 EOM
 # Finally allow direnv
