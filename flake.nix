@@ -43,7 +43,7 @@
         runtimeInputs = [wl-clipboard];
         text = builtins.readFile ./_-regexify.sh;
       };
-      all = pkgs.symlinkJoin {
+      all = pkgs.symlinkJoin { 
         name = "all";
         paths = [
           backup

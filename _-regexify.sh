@@ -49,5 +49,6 @@ for (( i=0; i<string_length; i++ )); do
 done
 
 # Print the original and modified strings.
-echo "$output_string" | wl-copy
-
+echo "$output_string"
+echo -n "$output_string" | wl-copy
+echo "Copied to clipboard!"
