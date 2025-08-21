@@ -40,7 +40,7 @@
       };
       regexify = pkgs.writeShellApplication {
         name = "_-regexify";
-        runtimeInputs = [];
+        runtimeInputs = [wl-clipboard];
         text = builtins.readFile ./_-regexify.sh;
       };
       all = pkgs.symlinkJoin {
