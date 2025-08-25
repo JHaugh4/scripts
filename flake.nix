@@ -46,7 +46,7 @@
         name = "_-regexify";
         runtimeInputs = [pkgs.wl-clipboard];
         text = builtins.readFile ./_-regexify.sh;
-        checkPhase = [ "SC2001" ];
+        excludeShellChecks = [ "SC2001" ];
       };
       all = pkgs.symlinkJoin { 
         name = "all";
