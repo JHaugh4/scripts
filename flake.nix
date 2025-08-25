@@ -1,9 +1,9 @@
 {
   description = "Personal shell script flake";
 
-  # inputs = {
-  #   nixpkgs.url = ""
-  # }
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  };
 
   outputs = {
     self,
@@ -40,7 +40,7 @@
       };
       regexify = pkgs.writeShellApplication {
         name = "_-regexify";
-        runtimeInputs = [wl-clipboard];
+        runtimeInputs = [pkgs.wl-clipboard];
         text = builtins.readFile ./_-regexify.sh;
       };
       all = pkgs.symlinkJoin { 
