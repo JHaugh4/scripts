@@ -1,3 +1,7 @@
+# To add to this:
+# Add package
+# Add package to symLinkJoin
+# Call nix flake update
 {
   description = "Personal shell script flake";
 
@@ -42,6 +46,7 @@
         name = "_-regexify";
         runtimeInputs = [pkgs.wl-clipboard];
         text = builtins.readFile ./_-regexify.sh;
+        checkPhase = [ "SC2001" ];
       };
       all = pkgs.symlinkJoin { 
         name = "all";

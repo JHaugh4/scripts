@@ -39,7 +39,7 @@ for (( i=0; i<string_length; i++ )); do
     char="${escaped_string:i:1}"
 
     # Don't splice in after \
-    if [[ "$char" == '\' ]]; then
+    if [[ "$char" == "\\" ]]; then
         # Just append the char
         output_string+="$char"
     else
