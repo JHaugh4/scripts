@@ -51,6 +51,7 @@
           full-rebuild
           haskell-init
           simple-init
+          regexify
         ];
       };
       default = all;
