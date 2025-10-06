@@ -2,6 +2,7 @@
 # Add package
 # Add package to symLinkJoin
 # Call nix flake update
+# Then push to git
 {
   description = "Personal shell script flake";
 
