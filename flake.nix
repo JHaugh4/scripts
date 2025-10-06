@@ -42,10 +42,17 @@
         runtimeInputs = [];
         text = builtins.readFile ./_-simple-init.sh;
       };
+      python-init = pkgs.writeShellApplication {
+        name = "_-python-init";
+        runtimeInputs = [];
+        text = builtins.readFile ./_-python-init.sh;
+      };
       regexify = pkgs.writeShellApplication {
         name = "_-regexify";
         runtimeInputs = [pkgs.wl-clipboard];
         text = builtins.readFile ./_-regexify.sh;
+        # Ignores warning about echo pipe sed.
+        # This cannot be fixed as they suggest.
         excludeShellChecks = [ "SC2001" ];
       };
       all = pkgs.symlinkJoin { 
@@ -56,6 +63,7 @@
           full-rebuild
           haskell-init
           simple-init
+          python-init
           regexify
         ];
       };

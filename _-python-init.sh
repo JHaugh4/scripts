@@ -7,9 +7,9 @@ cat > "shell.nix" <<- EOM
 
 pkgs.mkShell {
   packages = [
-    (pkgs.python3.withPackages (python-pkgs: [
-      python-pkgs.pandas
-      python-pkgs.requests
+    (pkgs.python3.withPackages (python-pkgs: with python-pkgs; [
+      pandas
+      requests
     ]))
   ];
 }
