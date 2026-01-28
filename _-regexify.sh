@@ -2,8 +2,6 @@
 # Exit on error
 set -e
 
-#!/bin/bash
-
 # This script takes a single string as an argument and first escapes
 # any special regex characters. It then inserts "\s*" before and after
 # every character in the sanitized string.
@@ -42,7 +40,8 @@ for (( i=0; i<string_length; i++ )); do
     if [[ "$char" == "\\" ]]; then
         # Just append the char
         output_string+="$char"
-    else
+    # Don't include spaces
+    elif [[ "$char" != " " ]]; then
         # Append the character and "\s*" to the output string.
         output_string+="$char\s*"
     fi
@@ -50,5 +49,10 @@ done
 
 # Print the original and modified strings.
 echo "$output_string"
-echo -n "$output_string" | wl-copy
-echo "Copied to clipboard!"
+
+# Check if we are outputting to a terminal
+if [ -t 1 ]; then
+    echo -n "$output_string" | wl-copy
+    # Redirect status message to stderr so it doesn't get captured
+    echo "Copied to clipboard!" >&2
+fi
