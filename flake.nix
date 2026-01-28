@@ -58,6 +58,11 @@
         # This cannot be fixed as they suggest.
         excludeShellChecks = [ "SC2001" ];
       };
+      replace-backticks = pkgs.writeShellApplication {
+        name = "_-replace-backticks";
+        runtimeInputs = [];
+        text = builtins.readFile ./_-replace-backticks.sh;
+      };
       all = pkgs.symlinkJoin { 
         name = "all";
         paths = [
@@ -68,6 +73,7 @@
           simple-init
           python-init
           regexify
+          replace-backticks
         ];
       };
       default = all;
