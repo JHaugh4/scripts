@@ -63,6 +63,11 @@
         runtimeInputs = [];
         text = builtins.readFile ./_-replace-backticks.sh;
       };
+      zip-lecture-code = pkgs.writeShellApplication {
+        name = "_-zip-lecture-code";
+        runtimeInputs = [pkgs.zip];
+        text = builtins.readFile ./_-zip-lecture-code.sh;
+      };
       all = pkgs.symlinkJoin { 
         name = "all";
         paths = [
@@ -74,6 +79,7 @@
           python-init
           regexify
           replace-backticks
+          zip-lecture-code
         ];
       };
       default = all;
