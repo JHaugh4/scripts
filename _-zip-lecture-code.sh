@@ -37,8 +37,9 @@ for file in "$SOURCE_DIR"/*.java; do
     # Get just the filename without the path
     filename=$(basename "$file")
 
-    # 3. Remove first two lines and save to temp
-    tail -n +3 "$file" > "$TEMP_DIR/$filename"
+    # 3. Deletes any line starting with "package"
+    # [[:space:]]* ensures it catches lines even if they are indented
+    sed '/^[[:space:]]*package/d' "$file" > "$TEMP_DIR/$filename"
     
     echo "  Processed: $filename"
 done
