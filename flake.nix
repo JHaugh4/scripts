@@ -30,11 +30,13 @@
         name = "_-home-rebuild";
         runtimeInputs = [];
         text = rebuildCommon + builtins.readFile ./_-home-rebuild.sh;
+        excludeShellChecks = ["SC1091"];
       };
       full-rebuild = pkgs.writeShellApplication {
         name = "_-full-rebuild";
         runtimeInputs = [];
         text = rebuildCommon + builtins.readFile ./_-full-rebuild.sh;
+        excludeShellChecks = ["SC1091"];
       };
       haskell-init = pkgs.writeShellApplication {
         name = "_-haskell-init";
