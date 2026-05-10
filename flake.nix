@@ -18,6 +18,7 @@
   }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    rebuildCommon = builtins.readFile ./_-rebuild-common.sh;
   in {
     packages.${system} = rec {
       backup = pkgs.writeShellApplication {
@@ -28,12 +29,12 @@
       home-rebuild = pkgs.writeShellApplication {
         name = "_-home-rebuild";
         runtimeInputs = [];
-        text = builtins.readFile ./_-home-rebuild.sh;
+        text = rebuildCommon + builtins.readFile ./_-home-rebuild.sh;
       };
       full-rebuild = pkgs.writeShellApplication {
         name = "_-full-rebuild";
         runtimeInputs = [];
-        text = builtins.readFile ./_-full-rebuild.sh;
+        text = rebuildCommon + builtins.readFile ./_-full-rebuild.sh;
       };
       haskell-init = pkgs.writeShellApplication {
         name = "_-haskell-init";

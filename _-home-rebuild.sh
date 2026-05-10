@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# shellcheck source=_-rebuild-common.sh
-source "$(dirname "$0")/_-rebuild-common.sh"
+declare -f pick_machine > /dev/null 2>&1 || source "$(dirname "$0")/_-rebuild-common.sh"
 
 if [[ $# -ge 1 ]]; then
     machine="$1"
